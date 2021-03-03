@@ -1,0 +1,9 @@
+= graal in docker plugin
+Edward <jaq@ethelred.org>
+v0.1
+
+This is a Gradle plugin to help me with building a graal native-image using a docker image containing graal. Basically it makes it easier to build the native image for a different platform than where Gradle is running.
+
+Right now it's pretty specific to my needs, but I may be able to genericise in future.
+
+The default docker image is https://github.com/edward3h/graal-fcgi-fake-dh-builder

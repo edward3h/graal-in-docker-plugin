@@ -1,0 +1,2 @@
+rootProject.name = 'graal-in-docker-plugin'
+include('plugin')
