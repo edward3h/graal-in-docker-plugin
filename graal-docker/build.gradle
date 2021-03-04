@@ -4,6 +4,10 @@ plugins {
 
     // Apply the Groovy plugin to add support for Groovy
     id 'groovy'
+
+    id 'maven-publish'
+    id "com.gradle.plugin-publish" version "0.13.0"
+
 }
 
 repositories {
@@ -17,14 +21,25 @@ dependencies {
     compile localGroovy()
 }
 
+group = 'org.ethelred'
+version = '0.2'
+
 gradlePlugin {
     // Define the plugin
     plugins {
         graalDocker {
             id = 'org.ethelred.graal.in.docker.plugin'
             implementationClass = 'org.ethelred.graal.in.docker.plugin.MyNativePlugin'
+            displayName = "Run graal native-image in a docker"
+            description = "Run graal native-image in a docker"
         }
     }
+}
+
+pluginBundle {
+    website = 'https://github.com/edward3h/graal-in-docker-plugin'
+    vcsUrl = 'https://github.com/edward3h/graal-in-docker-plugin'
+    tags = ['graal', 'docker', 'native-image']
 }
 
 // Add a source set for the functional test suite
