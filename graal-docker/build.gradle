@@ -11,18 +11,39 @@ plugins {
 }
 
 repositories {
-    // Use JCenter for resolving dependencies.
-    jcenter()
+    mavenCentral()
+}
+
+// Add a source set for the functional test suite
+def functionalTest = sourceSets.create('functionalTest')
+def functionalTestTask = tasks.register('functionalTest', Test) {
+    group = 'verification'
+    testClassesDirs = sourceSets.functionalTest.output.classesDirs
+    classpath = sourceSets.functionalTest.runtimeClasspath
+    useJUnitPlatform()
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.named('check') {
+    // Run the functional tests as part of `check`
+    dependsOn functionalTestTask
 }
 
 dependencies {
-    // Use the awesome Spock testing and specification framework
-    testImplementation 'org.spockframework:spock-core:1.3-groovy-2.5'
-    compile localGroovy()
+    testImplementation('org.spockframework:spock-core:2.0-groovy-3.0') {
+        exclude(group: 'org.codehaus.groovy')
+    }
+    implementation 'org.codehaus.groovy:groovy-all:3.0.9'
+    functionalTestImplementation('org.spockframework:spock-core:2.0-groovy-3.0') {
+        exclude(group: 'org.codehaus.groovy')
+    }
 }
 
 group = 'org.ethelred'
-version = '0.2'
+version = '0.6'
 
 gradlePlugin {
     // Define the plugin
@@ -34,6 +55,7 @@ gradlePlugin {
             description = "Run graal native-image in a docker"
         }
     }
+    testSourceSets(sourceSets.functionalTest)
 }
 
 pluginBundle {
@@ -42,22 +64,3 @@ pluginBundle {
     tags = ['graal', 'docker', 'native-image']
 }
 
-// Add a source set for the functional test suite
-sourceSets {
-    functionalTest {
-    }
-}
-
-gradlePlugin.testSourceSets(sourceSets.functionalTest)
-configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
-
-// Add a task to run the functional tests
-tasks.register('functionalTest', Test) {
-    testClassesDirs = sourceSets.functionalTest.output.classesDirs
-    classpath = sourceSets.functionalTest.runtimeClasspath
-}
-
-tasks.named('check') {
-    // Run the functional tests as part of `check`
-    dependsOn(tasks.functionalTest)
-}

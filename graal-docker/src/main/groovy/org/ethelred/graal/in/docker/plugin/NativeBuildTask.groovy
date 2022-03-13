@@ -40,7 +40,6 @@ class NativeBuildTask extends DefaultTask {
             '-J-Xmx4G',"-R:MinHeapSize=2m", "-R:MaxHeapSize=10m", "-R:MaxNewSize=1m",
 //            "-H:+PrintImageObjectTree",
             "-H:Log=registerResource",
-            "-H:+TraceClassInitialization",
             "-H:IncludeResources=.*logback.xml",
             "--initialize-at-build-time=org.ethelred",
                     "--initialize-at-build-time=ch.qos.logback,org.slf4j",
