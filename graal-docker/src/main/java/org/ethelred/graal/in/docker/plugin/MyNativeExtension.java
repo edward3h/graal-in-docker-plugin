@@ -16,9 +16,6 @@ public class MyNativeExtension
         dockerImageName.convention("ghcr.io/edward3h/graal-fcgi-fake-dh-builder:v0.6");
         mainClassName = objects.property(String.class);
         appName = objects.property(String.class);
-        deployDir = objects.property(String.class);
-        deployDir.convention("");
-        remoteHost = objects.property(String.class);
         generateNativeConfigEnvironment = objects.mapProperty(String.class, String.class);
     }
 
@@ -52,31 +49,9 @@ public class MyNativeExtension
         this.appName.set(appName);
     }
 
-    public Property<String> getDeployDir()
-    {
-        return deployDir;
-    }
-
-    public void setDeployDir(String deployDir)
-    {
-        this.deployDir.set(deployDir);
-    }
-
-    public Property<String> getRemoteHost()
-    {
-        return remoteHost;
-    }
-
-    public void setRemoteHost(String remoteHost)
-    {
-        this.remoteHost.set(remoteHost);
-    }
-
     private final Property<String> dockerImageName;
     private final Property<String> mainClassName;
     private final Property<String> appName;
-    private final Property<String> deployDir;
-    private final Property<String> remoteHost;
 
     public MapProperty<String, String> getGenerateNativeConfigEnvironment()
     {

@@ -12,10 +12,8 @@ class MyNativePlugin implements Plugin<Project> {
         def extension = project.extensions.create('graalDocker', MyNativeExtension, project.objects)
         def generateNativeConfig = project.tasks.register('generateNativeConfig', GenerateNativeConfigTask, extension)
         def nativeBuild = project.tasks.register('nativeImage', NativeBuildTask, extension)
-        def deploy = project.tasks.register('deploy', DeployTask, extension)
         generateNativeConfig.get().dependsOn(project.tasks.getByName('classes'))
         nativeBuild.get().dependsOn(project.tasks.getByName('classes'))
-        deploy.get().dependsOn nativeBuild.get()
         def cleanNative = project.tasks.register('cleanNative', Delete) {
             delete("$project.projectDir/reports")
         }
