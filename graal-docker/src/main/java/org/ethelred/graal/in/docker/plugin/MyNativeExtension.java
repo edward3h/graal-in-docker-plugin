@@ -13,7 +13,7 @@ public class MyNativeExtension
     public MyNativeExtension(ObjectFactory objects)
     {
         dockerImageName = objects.property(String.class);
-        dockerImageName.convention("ghcr.io/edward3h/graal-fcgi-fake-dh-builder:v0.6");
+        dockerImageName.convention("ghcr.io/edward3h/graal-fcgi-fake-dh-builder:v0.7");
         mainClassName = objects.property(String.class);
         appName = objects.property(String.class);
         generateNativeConfigEnvironment = objects.mapProperty(String.class, String.class);
