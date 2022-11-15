@@ -38,7 +38,7 @@ class GenerateNativeConfigTask extends DefaultTask {
             args envMap.collect { k, v -> ["--env", "$k=$v"]}.flatten()
                 // "--memory", "4g", "--oom-kill-disable",
             args extension.dockerImageName.get(),
-                "/root/.sdkman/candidates/java/current/bin/java", "-agentlib:native-image-agent=config-output-dir=$outdir",
+                "java", "-agentlib:native-image-agent=config-output-dir=$outdir",
                 "-cp", cp.asPath,
                 extension.mainClassName.get()
         }

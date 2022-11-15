@@ -43,7 +43,7 @@ dependencies {
 }
 
 group = 'org.ethelred'
-version = '0.7'
+version = '0.8'
 
 gradlePlugin {
     // Define the plugin

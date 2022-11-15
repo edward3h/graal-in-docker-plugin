@@ -5,6 +5,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 
 import javax.inject.Inject
+import java.nio.file.Files
 
 /**
  * TODO
@@ -30,9 +31,10 @@ class NativeBuildTask extends DefaultTask {
             commandLine "docker", "run",
             "--volume", "${thedir}:${thedir}", "--workdir", project.projectDir,
             "--volume", "${ghome}:${ghome}:ro",
+                    "--user", userString,
             // "--memory", "4g", "--oom-kill-disable",
             extension.dockerImageName.get(),
-            "/root/.sdkman/candidates/java/current/bin/native-image", "--no-fallback",
+            "native-image", "--no-fallback",
             "--allow-incomplete-classpath",
             "--static",
             '--report-unsupported-elements-at-runtime',
@@ -48,6 +50,17 @@ class NativeBuildTask extends DefaultTask {
             extension.mainClassName.get(),
             "${project.buildDir}/deploy/${extension.appName.orElse(extension.mainClassName).get()}"
         }
+    }
+
+    @Input
+    String getUserString() {
+        if (extension.user.isPresent()) {
+            return extension.user.get()
+        }
+        def dir = project.buildDir.toPath()
+        def uid = Files.getAttribute(dir, "unix:uid")
+        def gid = Files.getAttribute(dir, "unix:gid")
+        "${uid}:${gid}".toString()
     }
 
     void _validateProperties() {
