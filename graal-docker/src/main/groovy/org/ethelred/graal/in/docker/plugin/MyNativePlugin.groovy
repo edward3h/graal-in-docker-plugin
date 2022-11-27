@@ -9,7 +9,8 @@ import org.gradle.api.tasks.Delete
 class MyNativePlugin implements Plugin<Project> {
     void apply(Project project) {
         project.pluginManager.apply(JavaPlugin)
-        def extension = project.extensions.create('graalDocker', MyNativeExtension, project.objects)
+        def extension = project.extensions.create('graalDocker', MyNativeExtension)
+        extension.dockerImageName.convention("ghcr.io/edward3h/graal-fcgi-fake-dh-builder:v0.8")
         def generateNativeConfig = project.tasks.register('generateNativeConfig', GenerateNativeConfigTask, extension)
         def nativeBuild = project.tasks.register('nativeImage', NativeBuildTask, extension)
         generateNativeConfig.get().dependsOn(project.tasks.getByName('classes'))
