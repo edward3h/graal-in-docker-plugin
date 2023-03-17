@@ -33,12 +33,12 @@ tasks.named('check') {
 }
 
 dependencies {
-    testImplementation('org.spockframework:spock-core:2.0-groovy-3.0') {
+    testImplementation('org.spockframework:spock-core:2.3-groovy-4.0') {
         exclude(group: 'org.codehaus.groovy')
     }
 //    implementation 'org.codehaus.groovy:groovy-all:3.0.9'
     implementation localGroovy()
-    functionalTestImplementation('org.spockframework:spock-core:2.0-groovy-3.0') {
+    functionalTestImplementation('org.spockframework:spock-core:2.3-groovy-4.0') {
         exclude(group: 'org.codehaus.groovy')
     }
 }
